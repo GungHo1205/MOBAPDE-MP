@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.simpleProgressBar);
         backG = findViewById(R.id.backG);
 
-        backG.setBackgroundResource(R.drawable.portal);
+        backG.setBackgroundResource(R.drawable.portal2);
         if(firebaseAuth.getCurrentUser() != null){
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             MainActivity.this.startActivity(intent);
