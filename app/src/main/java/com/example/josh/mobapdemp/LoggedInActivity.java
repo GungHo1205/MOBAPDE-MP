@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,10 +39,8 @@ public class LoggedInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
 
-
-
-        adapter = new CrAdapter(this);
-        manager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+        adapter = new CrAdapter(LoggedInActivity.this);
+        manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
 
         recyclerArea = findViewById(R.id.recycler);
         recyclerArea.setLayoutManager(manager);
@@ -80,21 +79,26 @@ public class LoggedInActivity extends AppCompatActivity {
                 String CRNAME = crName.getText().toString();
                 String CRLOCATION = crLocation.getText().toString();
 
-                if(!TextUtils.isEmpty(CRNAME)||!TextUtils.isEmpty(CRLOCATION)){
-
-                    String ID = databaseCR.push().getKey();
-                    CrModel cr = new CrModel(ID, CRNAME, CRLOCATION);
-                    databaseCR.child(ID).setValue(cr);
-                    Toast.makeText(getApplicationContext(), "CR added!", Toast.LENGTH_SHORT).show();
-
-                }else{
-
-                    Toast.makeText(getApplicationContext(), "Empty Inputs", Toast.LENGTH_SHORT).show();
-
-                }
+                addCr(CRNAME, CRLOCATION);
             }
         });
 
+    }
+
+    public void addCr(String crName, String crLocation){
+
+        if(!TextUtils.isEmpty(crName)||!TextUtils.isEmpty(crLocation)){
+
+            String id = databaseCR.push().getKey();
+            CrModel cr = new CrModel(id, crName, crLocation);
+            databaseCR.child(id).setValue(cr);
+            Toast.makeText(getApplicationContext(), "CR added!", Toast.LENGTH_SHORT).show();
+
+        }else{
+
+            Toast.makeText(getApplicationContext(), "Empty Inputs", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
     public void logoutUser(){
@@ -104,10 +108,10 @@ public class LoggedInActivity extends AppCompatActivity {
         LoggedInActivity.this.startActivity(intent);
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
-
         databaseCR.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -127,4 +131,5 @@ public class LoggedInActivity extends AppCompatActivity {
             }
         });
     }
+
 }

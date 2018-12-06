@@ -3,16 +3,20 @@ package com.example.josh.mobapdemp;
 public class CrModel  {
     private String crName;
     private String crLocation;
-    private String ID;
+    private String id;
 
-    public CrModel(String ID, String crName, String crLocation) {
+    public CrModel (){
+
+    }
+
+    public CrModel(String id, String crName, String crLocation) {
         this.crName = crName;
         this.crLocation = crLocation;
-        this.ID = ID;
+        this.id = id;
     }
 
     public String getID() {
-        return ID;
+        return id;
     }
 
     public String getCrName() {
@@ -25,7 +29,7 @@ public class CrModel  {
     }
 
     public void setID(String ID) {
-        this.ID = ID;
+        this.id = id;
     }
 
     public void setCrName(String crName) {
