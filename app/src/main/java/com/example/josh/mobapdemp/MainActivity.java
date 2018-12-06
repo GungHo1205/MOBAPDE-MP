@@ -2,6 +2,7 @@ package com.example.josh.mobapdemp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText textPassword;
     private FirebaseAuth  firebaseAuth;
     private ProgressBar progressBar;
+    private ConstraintLayout backG;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,8 +36,11 @@ public class MainActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister);
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.simpleProgressBar);
+        backG = findViewById(R.id.backG);
+
+        backG.setBackgroundResource(R.drawable.portal);
         if(firebaseAuth.getCurrentUser() != null){
-            Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             MainActivity.this.startActivity(intent);
         }
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
                             finish();
                             MainActivity.this.startActivity(intent);
                         }

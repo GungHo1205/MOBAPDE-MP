@@ -12,7 +12,7 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
 
     private ArrayList<CrModel> list;
 
-    public CrAdapter(LoggedInActivity activity){
+    public CrAdapter(){
         list = new ArrayList<CrModel>();
     }
 

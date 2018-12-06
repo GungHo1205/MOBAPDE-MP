@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_comfortRooms"
+            android:icon="@drawable/ic_reorder_black_24dp"
+            android:title="Comfort Rooms" />
+        <item
+            android:id="@+id/nav_AddNew"
+            android:icon="@drawable/ic_add_box_black_24dp"
+            android:title="Add Comfort Rooms" />
+        <item
+            android:id="@+id/nav_Profile"
+            android:icon="@drawable/ic_assignment_ind_black_24dp"
+            android:title="Profile" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_LogOut"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="Log Out" />
+        </menu>
+    </item>
+
+</menu>

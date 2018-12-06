@@ -2,6 +2,7 @@ package com.example.josh.mobapdemp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button buttonRegister;
     private TextView textSignedIn;
     private FirebaseAuth firebaseAuth;
+    private ConstraintLayout backG2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class RegisterActivity extends AppCompatActivity {
         textPassword2 = findViewById(R.id.textPassword2);
         textSignedIn = findViewById(R.id.textView6);
         buttonRegister = findViewById(R.id.buttonRegister2);
+        backG2 = findViewById(R.id.backG2);
+
+        backG2.setBackgroundResource(R.drawable.portal);
         firebaseAuth = FirebaseAuth.getInstance();
 
         textSignedIn.setOnClickListener(new View.OnClickListener() {
