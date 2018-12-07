@@ -1,6 +1,7 @@
 package com.example.josh.mobapdemp;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -18,13 +19,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -77,9 +83,7 @@ public class AddNew_Fragment extends Fragment {
         AddRoom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String CrName = CrNameText.getText().toString().trim();
-                String CrLocation = CrLocationText.getText().toString().trim();
-                addCr(CrName, CrLocation);
+                addCr();
             }
         });
         selectImage.setOnClickListener(new View.OnClickListener() {
@@ -90,24 +94,33 @@ public class AddNew_Fragment extends Fragment {
         });
     }
 
-    public void addCr(String crName, String crLocation) {
-
-        if (!TextUtils.isEmpty(crName) || !TextUtils.isEmpty(crLocation)) {
-
-            String id = databaseCR.push().getKey();
-            CrModel cr = new CrModel(id, crName, crLocation);
-            databaseCR.child(id).setValue(cr);
+    public void addCr() {
+        final String CrName = CrNameText.getText().toString().trim();
+        final String CrLocation = CrLocationText.getText().toString().trim();
+        if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)) {
+            final String id = databaseCR.push().getKey();
             FirebaseUser user = firebaseAuth.getCurrentUser();
             String userID = user.getUid();
-            StorageReference filepath = storageReference.child("CRPhotos").child(uri.getLastPathSegment());
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
+             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
+                public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                    taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Log.d("test2", uri.toString());
+                            Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
+                            CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
+                            databaseCR.child(id).setValue(cr);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle any errors
+                            }
+                        });
+                    }
+                });
         } else {
 
             Toast.makeText(getActivity(), "Empty Inputs", Toast.LENGTH_SHORT).show();
@@ -125,6 +138,7 @@ public class AddNew_Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
+
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
 
@@ -135,5 +149,12 @@ public class AddNew_Fragment extends Fragment {
             }
         }
     }
+
+    public String getImageExt(Uri uri){
+        ContentResolver contentResolver = getContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
 
 }
