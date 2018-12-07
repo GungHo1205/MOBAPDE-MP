@@ -1,6 +1,7 @@
 package com.example.josh.mobapdemp;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -98,6 +100,9 @@ public class AddNew_Fragment extends Fragment {
         final String CrName = CrNameText.getText().toString().trim();
         final String CrLocation = CrLocationText.getText().toString().trim();
         if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)) {
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Uploading");
+            progressDialog.show();
             final String id = databaseCR.push().getKey();
             FirebaseUser user = firebaseAuth.getCurrentUser();
             String userID = user.getUid();
@@ -105,12 +110,13 @@ public class AddNew_Fragment extends Fragment {
              filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                     taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             // Got the uri
                             Log.d("test2", uri.toString());
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
                             // Wrap with Uri.parse() when retrieving
@@ -122,7 +128,19 @@ public class AddNew_Fragment extends Fragment {
                             }
                         });
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+                 @Override
+                 public void onFailure(@NonNull Exception e) {
+                     progressDialog.dismiss();
+                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                 }
+             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                 @Override
+                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                     progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                 }
+             });
         } else {
 
             Toast.makeText(getActivity(), "Empty Inputs", Toast.LENGTH_SHORT).show();
