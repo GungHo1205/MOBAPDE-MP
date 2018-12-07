@@ -11,6 +11,7 @@
         android:id="@+id/emailText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="84dp"
         android:background="@color/colorPrimaryDark"
@@ -19,13 +20,15 @@
         android:inputType="textEmailAddress"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />
 
     <EditText
         android:id="@+id/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="84dp"
         android:background="@color/colorPrimaryDark"
         android:backgroundTint="@color/common_google_signin_btn_text_light_default"
@@ -33,33 +36,38 @@
         android:inputType="textPassword"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="64dp"
         android:layout_height="24dp"
-        android:layout_marginTop="152dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/common_google_signin_btn_text_light_pressed"
         android:text="E-mail"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
-        app:layout_constraintEnd_toStartOf="@+id/emailText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/passwordText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="64dp"
         android:layout_height="24dp"
-        android:layout_marginTop="220dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/common_google_signin_btn_text_light_pressed"
         android:text="Password"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
-        app:layout_constraintEnd_toStartOf="@+id/passwordText"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />
 
     <ProgressBar
         android:id="@+id/simpleProgressBar"
@@ -108,11 +116,12 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="120dp"
-        android:layout_height="32dp"
+        android:layout_width="299dp"
+        android:layout_height="264dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="11dp"
+        android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
