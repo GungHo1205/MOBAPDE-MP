@@ -52,8 +52,13 @@ public class listCRs_Fragment extends Fragment {
 
         recyclerArea = view.findViewById(R.id.recycler);
         recyclerArea.setLayoutManager(manager);
-        recyclerArea.setAdapter(adapter);
 
+
+    }
+    
+    @Override
+    public void onStart() {
+        super.onStart();
         databaseCR.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -65,6 +70,8 @@ public class listCRs_Fragment extends Fragment {
                     adapter.addCr(CR);
                 }
 
+                recyclerArea.setAdapter(adapter);
+
             }
 
             @Override
@@ -72,12 +79,5 @@ public class listCRs_Fragment extends Fragment {
 
             }
         });
-
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//
-//    }
 }
