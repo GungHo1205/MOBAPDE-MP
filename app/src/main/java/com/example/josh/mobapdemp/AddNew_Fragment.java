@@ -105,13 +105,15 @@ public class AddNew_Fragment extends Fragment {
              filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                     taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
+                            // Got the uri
                             Log.d("test2", uri.toString());
-                            Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
+                            // Wrap with Uri.parse() when retrieving
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
