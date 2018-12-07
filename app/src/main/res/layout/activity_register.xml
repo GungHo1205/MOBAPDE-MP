@@ -52,11 +52,12 @@
         android:id="@+id/textView4"
         android:layout_width="64dp"
         android:layout_height="24dp"
+        android:layout_marginTop="136dp"
         android:background="@color/common_google_signin_btn_text_light_pressed"
         android:text="Email"
         android:textColor="@android:color/background_light"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="136dp" />
+        app:layout_constraintEnd_toStartOf="@+id/textEmail2"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView5"

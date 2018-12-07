@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">MOBAPDE MP</string>
-    <string name="title_activity_logged_in">LoggedInActivity</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">CRomato</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">CRomato</string>
