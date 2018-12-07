@@ -116,10 +116,9 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="299dp"
-        android:layout_height="264dp"
+        android:layout_width="0dp"
+        android:layout_height="248dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="17dp"
         android:layout_marginEnd="10dp"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
