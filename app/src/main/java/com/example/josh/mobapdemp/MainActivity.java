@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth  firebaseAuth;
     private ProgressBar progressBar;
     private ConstraintLayout backG;
+    private ImageView logo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.simpleProgressBar);
         backG = findViewById(R.id.backG);
-
+        logo = findViewById(R.id.imageView2);
+        logo.setImageResource(R.drawable.logo);
         backG.setBackgroundResource(R.drawable.portal2);
         if(firebaseAuth.getCurrentUser() != null){
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
