@@ -121,15 +121,14 @@ public class AddNew_Fragment extends Fragment {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        ImageView crView = getView().findViewById(R.id.crImageView);
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
 
-                crView.setImageBitmap(bitmap);
-                crView.setVisibility(View.VISIBLE);
+                crImage.setImageBitmap(bitmap);
+                crImage.setVisibility(View.VISIBLE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
