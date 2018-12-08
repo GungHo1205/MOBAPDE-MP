@@ -124,7 +124,7 @@ public class AddNew_Fragment extends Fragment {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
-                            // Handle any errors
+                            Toast.makeText(getActivity(), "No photo", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

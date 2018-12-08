@@ -1,11 +1,12 @@
 package com.example.josh.mobapdemp;
 
+import android.widget.Button;
+
 public class CrModel  {
     private String crName;
     private String crLocation;
     private String id;
     private String imageUrl;
-
     public CrModel (){
 
     }
@@ -29,6 +30,7 @@ public class CrModel  {
 
         return imageUrl;
     }
+
 
     public String getCrLocation() {
         return crLocation;

@@ -1,5 +1,6 @@
 package com.example.josh.mobapdemp;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -34,7 +35,7 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CrHolder crHolder, int i) {
+    public void onBindViewHolder(@NonNull CrHolder crHolder, final int i) {
        crHolder.setName(list.get(i).getCrName());
        crHolder.setLocation(list.get(i).getCrLocation());
         Picasso.get()
@@ -43,7 +44,24 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
                 .centerCrop()
                 .into(crHolder.crImage);
         Log.d("test2", list.get(i).getImageUrl());
+
         crHolder.setCrImage(R.drawable.logo);
+
+        crHolder.crCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), CrDetails.class);
+                intent.putExtra("crImage", list.get(i).getImageUrl());
+                intent.putExtra("crName", list.get(i).getCrName());
+                intent.putExtra("crLocation", list.get(i).getCrLocation());
+                Log.d("test2", "On Click" + list.get(i).getImageUrl());
+                Log.d("test2", "On Click" + list.get(i).getCrName());
+                Log.d("test2", "On Click" + list.get(i).getCrLocation());
+                Log.d("test2", "On Click" + i);
+                v.getContext().startActivity(intent);
+
+            }
+        });
     }
 
     public void clearList(){
