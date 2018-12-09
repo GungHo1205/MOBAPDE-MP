@@ -29,11 +29,6 @@ public class listCRs_Fragment extends Fragment {
     private RecyclerView recyclerArea;
     private CrAdapter adapter;
     private RecyclerView.LayoutManager manager;
-    private ArrayList<Integer> crIds;
-    private ArrayList<String> crNames;
-    private ArrayList<String> crLocations;
-    private ArrayList<String> crImages;
-    private int id;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -48,13 +43,9 @@ public class listCRs_Fragment extends Fragment {
 
         databaseCR = FirebaseDatabase.getInstance().getReference("CR");
         databaseCR.push();
-        id = 0;
+
         adapter = new CrAdapter();
         manager = new LinearLayoutManager(this.getContext(),LinearLayoutManager.VERTICAL,false);
-        crIds = new ArrayList<Integer>();
-        crImages = new ArrayList<String>();
-        crLocations = new ArrayList<String>();
-        crNames = new ArrayList<String>();
 
         if(firebaseAuth.getCurrentUser() == null){
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -76,12 +67,7 @@ public class listCRs_Fragment extends Fragment {
                 adapter.clearList();
                 for(DataSnapshot crSnapshot : dataSnapshot.getChildren()){
                     CrModel CR = crSnapshot.getValue(CrModel.class);
-                    crIds.add(id);
-                    crImages.add(CR.getImageUrl());
-                    crLocations.add(CR.getCrLocation());
-                    crNames.add(CR.getCrName());
                     adapter.addCr(CR);
-                    id++;
                 }
                 recyclerArea.setAdapter(adapter);
             }

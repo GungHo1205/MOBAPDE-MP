@@ -104,6 +104,7 @@ public class AddNew_Fragment extends Fragment {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
             final String id = databaseCR.push().getKey();
+            Log.d("test2", id);
             FirebaseUser user = firebaseAuth.getCurrentUser();
             String userID = user.getUid();
             final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
@@ -114,11 +115,12 @@ public class AddNew_Fragment extends Fragment {
                         @Override
                         public void onSuccess(Uri uri) {
                             // Got the uri
-                            Log.d("test2", uri.toString());
                             progressDialog.dismiss();
                             Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
+                            Log.d("test2", databaseCR.push().getKey());
+                            Log.d("test2", id);
                             // Wrap with Uri.parse() when retrieving
                         }
                     }).addOnFailureListener(new OnFailureListener() {

@@ -67,6 +67,8 @@ public class HomeActivity extends AppCompatActivity
         username = navigationView.getHeaderView(0).findViewById(R.id.TextUsername);
         username.setText(firebaseAuth.getCurrentUser().getEmail());
 
+        createFragmentSpace(new listCRs_Fragment());
+
     }
 
     @Override
@@ -126,15 +128,19 @@ public class HomeActivity extends AppCompatActivity
         }
 
         if(fragment!=null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-            fragmentTransaction.replace(R.id.screen_area, fragment);
-            fragmentTransaction.commit();
+            createFragmentSpace(fragment);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void createFragmentSpace(Fragment fragment){
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        fragmentTransaction.replace(R.id.screen_area, fragment);
+        fragmentTransaction.commit();
     }
 }

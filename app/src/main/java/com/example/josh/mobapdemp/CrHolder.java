@@ -33,9 +33,4 @@ public class CrHolder extends RecyclerView.ViewHolder{
     public void setLocation(String location){ crLocation.setText(location);}
     public void setCrImage(int i){crImage.setImageResource(i);}
 
-    public void setButton(Button crCheck) {
-        this.crCheck = crCheck;
-    }
-
-
 }

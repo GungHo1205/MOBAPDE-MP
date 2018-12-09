@@ -1,7 +1,11 @@
 package com.example.josh.mobapdemp;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -36,6 +42,7 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CrHolder crHolder, final int i) {
+        Log.d("test2", list.get(i).getID());
        crHolder.setName(list.get(i).getCrName());
        crHolder.setLocation(list.get(i).getCrLocation());
         Picasso.get()
@@ -43,7 +50,6 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
                 .fit()
                 .centerCrop()
                 .into(crHolder.crImage);
-        Log.d("test2", list.get(i).getImageUrl());
 
         crHolder.setCrImage(R.drawable.logo);
 
@@ -54,10 +60,7 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
                 intent.putExtra("crImage", list.get(i).getImageUrl());
                 intent.putExtra("crName", list.get(i).getCrName());
                 intent.putExtra("crLocation", list.get(i).getCrLocation());
-                Log.d("test2", "On Click" + list.get(i).getImageUrl());
-                Log.d("test2", "On Click" + list.get(i).getCrName());
-                Log.d("test2", "On Click" + list.get(i).getCrLocation());
-                Log.d("test2", "On Click" + i);
+                intent.putExtra("id", list.get(i).getID());
                 v.getContext().startActivity(intent);
 
             }

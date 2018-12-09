@@ -38,7 +38,7 @@ public class CrModel  {
 
 
     public void setID(String ID) {
-        this.id = id;
+        this.id = ID;
     }
 
     public void setCrName(String crName) {
