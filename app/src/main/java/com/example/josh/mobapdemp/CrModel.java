@@ -11,6 +11,7 @@ public class CrModel  {
 
     }
 
+
     public CrModel(String id, String crName, String crLocation, String imageUrl) {
         this.crName = crName;
         this.crLocation = crLocation;

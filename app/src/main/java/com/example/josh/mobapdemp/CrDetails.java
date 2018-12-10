@@ -53,7 +53,8 @@ public class CrDetails extends AppCompatActivity {
     public static final String CHANNEL_ID = "mobapde notifs";
     private int notificationID;
     private ArrayList<String> emailArray;
-
+    private boolean hasComment;
+    private boolean hasNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +69,13 @@ public class CrDetails extends AppCompatActivity {
         addReview = findViewById(R.id.buttonReview);
         popUp.setVisibility(popUp.GONE);
         emailArray = new ArrayList<String>();
-
+        hasComment = false;
+        hasNotif = false;
         Intent intent = getIntent();
         String crName = intent.getStringExtra("crName");
         String crLocation = intent.getStringExtra("crLocation");
         String crImage = intent.getStringExtra("crImage");
         String crId = intent.getStringExtra("id");
-        Log.d("test2", crId);
-        Log.d("test2", intent.getStringExtra("id"));
         crDetailName = findViewById(R.id.crDetailName);
         crDetailLocation = findViewById(R.id.crDetailLocation);
         crDetailImage = findViewById(R.id.crDetailImage);
@@ -100,8 +100,6 @@ public class CrDetails extends AppCompatActivity {
                 float rating = ratingBarView.getRating();
                 addComment(userInput, rating);
                 popUp.setVisibility(popUp.GONE);
-                Log.d("test2", "test addListener"+ rating);
-                Log.d("test2", "test addInput"+ userInput);
             }
         });
 
@@ -115,19 +113,15 @@ public class CrDetails extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         databaseComments = FirebaseDatabase.getInstance().getReference("Comments").child(crId);
         userID = firebaseAuth.getUid();
-        Log.d("test2", "test database"+ databaseComments);
 
     }
 
     public void addComment(String userInput, float rating){
         if(!TextUtils.isEmpty(userInput)){
-            Log.d("test2", "test add Comment"+ userInput);
             String id = databaseComments.push().getKey();
             CommentsModel cm = new CommentsModel(firebaseAuth.getCurrentUser().getEmail(), userInput, rating, id);
             databaseUser.child(userID).child("exp").setValue(exp+3);
             databaseComments.child(id).setValue(cm);
-            Log.d("test2", "test add Comment"+ rating);
-            Log.d("test2", "test add Comment"+ id);
         }
     }
 
@@ -141,8 +135,10 @@ public class CrDetails extends AppCompatActivity {
 
                 for(DataSnapshot cmSnapshot : dataSnapshot.getChildren()){
                    CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
-                   emailArray.add(CM.getCommentUsername());
+                   emailArray.add(CM.commentUsername);
                     adapter.addCm(CM);
+                    Log.d("test2", "email" + emailArray.size());
+                    Log.d("test2", "exp" + emailArray.get(0));
                     }
 
                 recyclerArea.setAdapter(adapter);
@@ -171,15 +167,24 @@ public class CrDetails extends AppCompatActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1)) {
-                    for(int x = 0; x <= emailArray.size();x++){
-                        Log.d("test2", emailArray.get(x));
-                        if(emailArray.get(x)!=firebaseAuth.getCurrentUser().getEmail()){
-                            createNotificationChannel();
-                            createNotif();
+                    for(int x = 0; x < emailArray.size();x++){
+                        Log.d("test2", "hascomment"+ hasComment);
+                        Log.d("test2", "email"+ emailArray.get(x));
+                        Log.d("test2", "email2"+ firebaseAuth.getCurrentUser().getEmail());
+                        if(emailArray.get(x).equals(firebaseAuth.getCurrentUser().getEmail())){
+                            hasComment = true;
                             break;
                         }
+                        Log.d("test2", "hascomment"+ hasComment);
+                    }
+                    Log.d("test2", "unscrollable");
+                    if(hasComment == false && hasNotif == false) {
+                        createNotificationChannel();
+                        createNotif();
+                        hasNotif = true;
                     }
                 }
+
             }
         });
     }

@@ -39,9 +39,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder>{
        commentsHolder.setUsername(list.get(i).getCommentUsername());
        commentsHolder.setComment(list.get(i).getCommentDescription());
        commentsHolder.setRatingBar(list.get(i).getCrRating());
-        Log.d("test2", "BindViewUser" +list.get(i).getCommentUsername());
-        Log.d("test2", "BindViewDesc" + list.get(i).getCommentDescription());
-        Log.d("test2", "BindViewRating"  + list.get(i).getCrRating());
     }
 
     public void clearList(){

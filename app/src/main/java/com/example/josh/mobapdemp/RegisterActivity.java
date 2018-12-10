@@ -80,7 +80,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this,"Success",Toast.LENGTH_SHORT).show();
                             id = databaseUser.push().getKey();
 
-                            userModel user = new userModel(email, exp, firebaseAuth.getUid());
+                            userModel user = new userModel(email, exp);
                             databaseUser.child(firebaseAuth.getUid()).setValue(user);
                             Log.d("test2", firebaseAuth.getUid());
                             Log.d("test2", id);

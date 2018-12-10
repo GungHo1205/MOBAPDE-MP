@@ -107,9 +107,7 @@ public class AddNew_Fragment extends Fragment {
     }
 
     public void addCr() {
-        Log.d("test2", "useremail" + firebaseAuth.getCurrentUser().getEmail());
         final String userEmail = firebaseAuth.getCurrentUser().getEmail();
-        Log.d("test2", "useremailemail" + userEmail);
         final String CrName = CrNameText.getText().toString().trim();
         final String CrLocation = CrLocationText.getText().toString().trim();
         if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)) {
@@ -117,7 +115,6 @@ public class AddNew_Fragment extends Fragment {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
             final String id = databaseCR.push().getKey();
-            Log.d("test2", "ID" + userID);
             FirebaseUser user = firebaseAuth.getCurrentUser();
             final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

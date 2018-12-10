@@ -30,7 +30,6 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
         list.add(cr);
     }
 
-
     @NonNull
     @Override
     public CrHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -42,7 +41,6 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CrHolder crHolder, final int i) {
-        Log.d("test2", list.get(i).getID());
        crHolder.setName(list.get(i).getCrName());
        crHolder.setLocation(list.get(i).getCrLocation());
         Picasso.get()

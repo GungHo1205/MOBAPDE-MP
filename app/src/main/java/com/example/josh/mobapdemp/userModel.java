@@ -1,16 +1,14 @@
 package com.example.josh.mobapdemp;
 
 public class userModel {
-    String email;
-    int exp;
-    String ID;
+    public String email;
+    public int exp;
     public userModel(){
 
     }
-    public userModel(String email, int exp, String ID){
+    public userModel(String email, int exp){
         this.email = email;
         this.exp = exp;
-        this.ID = ID;
     }
 
     public void setEmail(String email) {
@@ -29,11 +27,4 @@ public class userModel {
         return exp;
     }
 
-    public String getID() {
-        return ID;
-    }
-
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 }

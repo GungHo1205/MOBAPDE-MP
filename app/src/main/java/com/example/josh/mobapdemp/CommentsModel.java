@@ -1,10 +1,10 @@
 package com.example.josh.mobapdemp;
 
 public class CommentsModel {
-    private String commentUsername;
-    private String commentDescription;
-    private String id;
-    private float crRating;
+    public String commentUsername;
+    public String commentDescription;
+    public String id;
+    public float crRating;
 
     public CommentsModel(String commentUsername, String commentDescription, float crRating, String id) {
         this.commentUsername = commentUsername;
