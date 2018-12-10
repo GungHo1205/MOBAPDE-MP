@@ -184,7 +184,6 @@ public class CrDetails extends AppCompatActivity {
         });
     }
     private void createNotificationChannel() {
-        Log.d("test2", "notifChannel");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Cromato", importance);
@@ -195,7 +194,6 @@ public class CrDetails extends AppCompatActivity {
     }
 
     public void createNotif(){
-        Log.d("test2", "notif");
         Intent intent = new Intent(CrDetails.this, CrDetails.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(CrDetails.this, 0, intent, 0);
