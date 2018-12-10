@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 public class CommentsHolder extends RecyclerView.ViewHolder{
     private TextView usernameView;
-    private EditText commentView;
+    private TextView commentView;
     private RatingBar ratingBar;
 
     public CommentsHolder(View view){
         super(view);
 
         usernameView = view.findViewById(R.id.textViewCommentUsername);
-        commentView = view.findViewById(R.id.editTextComment);
+        commentView = view.findViewById(R.id.textView9);
         ratingBar = view.findViewById(R.id.ratingBar2);
 
     }
