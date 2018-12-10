@@ -54,6 +54,7 @@ public class AddNew_Fragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseCR;
     private DatabaseReference databaseUser;
+//    private DatabaseReference databaseUserExp;
     private EditText CrNameText;
     private EditText CrLocationText;
     private Button AddRoom;
@@ -80,8 +81,10 @@ public class AddNew_Fragment extends Fragment {
         selectImage = view.findViewById(R.id.selectImage);
         crImage = view.findViewById(R.id.crImageView);
         firebaseAuth = FirebaseAuth.getInstance();
+        userID = firebaseAuth.getUid();
         databaseCR = FirebaseDatabase.getInstance().getReference("CR");
         databaseUser = FirebaseDatabase.getInstance().getReference("Users");
+//        databaseUserExp = databaseUser.child("exp");
         storageReference = FirebaseStorage.getInstance().getReference();
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -114,7 +117,6 @@ public class AddNew_Fragment extends Fragment {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
             final String id = databaseCR.push().getKey();
-            userID = firebaseAuth.getUid();
             Log.d("test2", "ID" + userID);
             FirebaseUser user = firebaseAuth.getCurrentUser();
             final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
@@ -130,11 +132,12 @@ public class AddNew_Fragment extends Fragment {
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
                             // Wrap with Uri.parse() when retrieving
-                            databaseUser.addValueEventListener(new ValueEventListener() {
+                            databaseUser.child(userID).addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     userModel userModel = dataSnapshot.getValue(userModel.class);
-                                    exp = userModel.getExp();
+                                    exp = userModel.exp;
+                                    Log.d("test2", "email" + userModel.email);
                                     Log.d("test2", "exp" + exp);
                                 }
                                 @Override
