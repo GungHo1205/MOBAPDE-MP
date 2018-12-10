@@ -51,7 +51,6 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
                 .centerCrop()
                 .into(crHolder.crImage);
         crHolder.setCrImage(R.drawable.logo);
-
         crHolder.crCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

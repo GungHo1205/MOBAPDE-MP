@@ -1,8 +1,14 @@
 package com.example.josh.mobapdemp;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 public class CrDetails extends AppCompatActivity {
     private TextView crDetailName;
     private TextView crDetailLocation;
@@ -38,6 +46,13 @@ public class CrDetails extends AppCompatActivity {
     private RatingBar ratingBarView;
     private Button addReview;
     private ConstraintLayout popUp;
+    private DatabaseReference databaseUser;
+    private int exp;
+    private String userID;
+    public static final String CHANNEL_ID = "mobapde notifs";
+    private int notificationID;
+    private ArrayList<String> emailArray;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +63,10 @@ public class CrDetails extends AppCompatActivity {
         userAddComment = findViewById(R.id.AddComment);
         ratingBarView = findViewById(R.id.ratingBar);
         popUp = findViewById(R.id.constraintLayoutPopup);
-
+        notificationID = 12;
         addReview = findViewById(R.id.buttonReview);
         popUp.setVisibility(popUp.GONE);
-
+        emailArray = new ArrayList<String>();
 
         Intent intent = getIntent();
         String crName = intent.getStringExtra("crName");
@@ -94,9 +109,11 @@ public class CrDetails extends AppCompatActivity {
 
         recyclerArea = findViewById(R.id.recyclerComments);
         recyclerArea.setLayoutManager(manager);
+        databaseUser = FirebaseDatabase.getInstance().getReference("Users");
 
         firebaseAuth = FirebaseAuth.getInstance();
         databaseComments = FirebaseDatabase.getInstance().getReference("Comments").child(crId);
+        userID = firebaseAuth.getUid();
         Log.d("test2", "test database"+ databaseComments);
 
     }
@@ -106,6 +123,7 @@ public class CrDetails extends AppCompatActivity {
             Log.d("test2", "test add Comment"+ userInput);
             String id = databaseComments.push().getKey();
             CommentsModel cm = new CommentsModel(firebaseAuth.getCurrentUser().getEmail(), userInput, rating, id);
+            databaseUser.child(userID).child("exp").setValue(exp+3);
             databaseComments.child(id).setValue(cm);
             Log.d("test2", "test add Comment"+ rating);
             Log.d("test2", "test add Comment"+ id);
@@ -121,9 +139,15 @@ public class CrDetails extends AppCompatActivity {
                 adapter.clearList();
 
                 for(DataSnapshot cmSnapshot : dataSnapshot.getChildren()){
-
                    CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
+                   emailArray.add(CM.getCommentUsername());
                     adapter.addCm(CM);
+                    if(CM.getCommentUsername()!=firebaseAuth.getCurrentUser().getEmail()){
+                        Log.d("test2", "testif");
+                        createNotificationChannel();
+                        createNotif();
+                    }
+                    Log.d("test2", "testnotif");
                 }
 
                 recyclerArea.setAdapter(adapter);
@@ -132,7 +156,48 @@ public class CrDetails extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+        databaseUser.child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userModel userModel = dataSnapshot.getValue(userModel.class);
+                exp = userModel.exp;
+
+                Log.d("test2", "email" + userModel.email);
+                Log.d("test2", "exp" + exp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    private void createNotificationChannel() {
+        Log.d("test2", "notifChannel");
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, "Cromato", importance);
+            channel.setDescription("Cromato Channel");
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
+    public void createNotif(){
+        Log.d("test2", "notif");
+        Intent intent = new Intent(CrDetails.this, CrDetails.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(CrDetails.this, 0, intent, 0);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(CrDetails.this, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Cromato")
+                .setContentText("Kindly submit a review on the CR you used!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(CrDetails.this);
+
+        notificationManager.notify(notificationID, mBuilder.build());
+    }
 
 }

@@ -132,19 +132,6 @@ public class AddNew_Fragment extends Fragment {
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
                             // Wrap with Uri.parse() when retrieving
-                            databaseUser.child(userID).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    userModel userModel = dataSnapshot.getValue(userModel.class);
-                                    exp = userModel.exp;
-                                    Log.d("test2", "email" + userModel.email);
-                                    Log.d("test2", "exp" + exp);
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -202,6 +189,21 @@ public class AddNew_Fragment extends Fragment {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+    public void onStart() {
+        super.onStart();
+        databaseUser.child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userModel userModel = dataSnapshot.getValue(userModel.class);
+                exp = userModel.exp;
+                Log.d("test2", "email" + userModel.email);
+                Log.d("test2", "exp" + exp);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
 }
