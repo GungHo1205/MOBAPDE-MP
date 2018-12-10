@@ -15,6 +15,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
     private EditText textEmail2;
@@ -23,7 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
     private TextView textSignedIn;
     private FirebaseAuth firebaseAuth;
     private ConstraintLayout backG2;
-
+    private DatabaseReference databaseUser;
+    int exp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         backG2.setBackgroundResource(R.drawable.portal2);
         firebaseAuth = FirebaseAuth.getInstance();
-
+        databaseUser = FirebaseDatabase.getInstance().getReference("Users");
         textSignedIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,9 +65,9 @@ public class RegisterActivity extends AppCompatActivity {
         textEmail2 = findViewById(R.id.textEmail2);
         textPassword2 = findViewById(R.id.textPassword2);
 
-        String email = textEmail2.getText().toString().trim();
+        final String email = textEmail2.getText().toString().trim();
         String password = textPassword2.getText().toString().trim();
-
+        exp = 0;
 
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -73,6 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this,"Success",Toast.LENGTH_SHORT).show();
+                            userModel user = new userModel(email, exp);
+                            String id = databaseUser.push().getKey();
+                            databaseUser.child(id).setValue(user);
                         }else{
                             Toast.makeText(RegisterActivity.this,"Failed", Toast.LENGTH_SHORT).show();
                         }
