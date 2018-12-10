@@ -54,7 +54,7 @@ public class AddNew_Fragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseCR;
     private DatabaseReference databaseUser;
-//    private DatabaseReference databaseUserExp;
+    //    private DatabaseReference databaseUserExp;
     private EditText CrNameText;
     private EditText CrLocationText;
     private Button AddRoom;
@@ -120,7 +120,7 @@ public class AddNew_Fragment extends Fragment {
             Log.d("test2", "ID" + userID);
             FirebaseUser user = firebaseAuth.getCurrentUser();
             final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
-             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
                     taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -150,23 +150,23 @@ public class AddNew_Fragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             Toast.makeText(getActivity(), "No photo", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                })
-                     .addOnFailureListener(new OnFailureListener() {
-                 @Override
-                 public void onFailure(@NonNull Exception e) {
-                     progressDialog.dismiss();
-                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                 }
-             }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                 @Override
-                 public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                     double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                     progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
-                 }
-             });
+                        }
+                    });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                    double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                    progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                }
+            });
             databaseUser.child(userID).child("exp").setValue(exp+5);
         } else {
 
