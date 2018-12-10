@@ -10,33 +10,27 @@
     <EditText
         android:id="@+id/emailText"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="32dp"
+        android:layout_height="45dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="84dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/common_google_signin_btn_text_light_default"
+        android:background="@drawable/layout_border3"
         android:ems="10"
         android:inputType="textEmailAddress"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />
 
     <EditText
         android:id="@+id/passwordText"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="84dp"
-        android:background="@color/colorPrimaryDark"
-        android:backgroundTint="@color/common_google_signin_btn_text_light_default"
+        android:background="@drawable/layout_border3"
         android:ems="10"
         android:inputType="textPassword"
         android:textColor="@android:color/background_light"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/emailText" />
 
     <TextView
@@ -46,25 +40,24 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/common_google_signin_btn_text_light_default"
-        android:text="E-mail"
+        android:text="E-mail:"
         android:textAlignment="center"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/passwordText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />
+        app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar"
+        app:layout_constraintVertical_bias="0.555" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="64dp"
-        android:layout_height="24dp"
+        android:layout_width="73dp"
+        android:layout_height="21dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="80dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/common_google_signin_btn_text_light_default"
-        android:text="Password"
+        android:text="Password:"
         android:textAlignment="center"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/simpleProgressBar" />

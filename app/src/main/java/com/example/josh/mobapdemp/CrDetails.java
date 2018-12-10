@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -55,6 +56,12 @@ public class CrDetails extends AppCompatActivity {
     private ArrayList<String> emailArray;
     private boolean hasComment;
     private boolean hasNotif;
+    private Button btnBack;
+
+    private CheckBox viewBidet;
+    private CheckBox viewAircon;
+    private CheckBox viewToiletSeat;
+    private CheckBox viewTissue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,17 +78,40 @@ public class CrDetails extends AppCompatActivity {
         emailArray = new ArrayList<String>();
         hasComment = false;
         hasNotif = false;
+
         Intent intent = getIntent();
         String crName = intent.getStringExtra("crName");
         String crLocation = intent.getStringExtra("crLocation");
         String crImage = intent.getStringExtra("crImage");
         String crId = intent.getStringExtra("id");
+        Boolean hasBidet = intent.getBooleanExtra("hasBidet", false);
+        Boolean hasAircon = intent.getBooleanExtra("hasAircon", false);
+        Boolean hasToiletSeat = intent.getBooleanExtra("hasToiletSeat", false);
+        Boolean hasTissue = intent.getBooleanExtra("hasTissue", false);
+
+        viewBidet = findViewById(R.id.checkBox6);
+        viewAircon = findViewById(R.id.checkBox7);
+        viewToiletSeat = findViewById(R.id.checkBox8);
+        viewTissue = findViewById(R.id.checkBox9);
+
         crDetailName = findViewById(R.id.crDetailName);
         crDetailLocation = findViewById(R.id.crDetailLocation);
         crDetailImage = findViewById(R.id.crDetailImage);
+        btnBack = findViewById(R.id.buttonBack);
 
         crDetailName.setText(crName);
         crDetailLocation.setText(crLocation);
+
+//        viewBidet.setEnabled(false);
+//        viewAircon.setEnabled(false);
+//        viewToiletSeat.setEnabled(false);
+//        viewTissue.setEnabled(false);
+
+        viewBidet.setChecked(hasBidet);
+        viewAircon.setChecked(hasAircon);
+        viewToiletSeat.setChecked(hasToiletSeat);
+        viewTissue.setChecked(hasTissue);
+
         Picasso.get()
                 .load(intent.getStringExtra("crImage"))
                 .into(crDetailImage);
@@ -100,6 +130,13 @@ public class CrDetails extends AppCompatActivity {
                 float rating = ratingBarView.getRating();
                 addComment(userInput, rating);
                 popUp.setVisibility(popUp.GONE);
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
