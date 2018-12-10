@@ -56,7 +56,11 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder>{
                 intent.putExtra("crImage", list.get(i).getImageUrl());
                 intent.putExtra("crName", list.get(i).getCrName());
                 intent.putExtra("crLocation", list.get(i).getCrLocation());
-                intent.putExtra("id", list.get(i).getID());
+                intent.putExtra("id", list.get(i).getId());
+                intent.putExtra("hasBidet",list.get(i).getHasBidet());
+                intent.putExtra("hasAircon", list.get(i).getHasAircon());
+                intent.putExtra("hasToiletSeat", list.get(i).getHasToiletSeat());
+                intent.putExtra("hasTissue", list.get(i).getHasTissue());
                 v.getContext().startActivity(intent);
 
             }

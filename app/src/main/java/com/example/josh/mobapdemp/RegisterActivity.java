@@ -42,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister = findViewById(R.id.buttonRegister2);
         backG2 = findViewById(R.id.backG2);
 
-        backG2.setBackgroundResource(R.drawable.portal2);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseUser = FirebaseDatabase.getInstance().getReference("Users");
         textSignedIn.setOnClickListener(new View.OnClickListener() {

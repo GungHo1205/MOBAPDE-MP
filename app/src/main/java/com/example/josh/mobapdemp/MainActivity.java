@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         backG = findViewById(R.id.backG);
         logo = findViewById(R.id.imageView2);
         logo.setImageResource(R.drawable.logo);
-        backG.setBackgroundResource(R.drawable.portal2);
         if(firebaseAuth.getCurrentUser() != null){
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             MainActivity.this.startActivity(intent);

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorJoiner;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -66,6 +68,11 @@ public class AddNew_Fragment extends Fragment {
     private Bitmap bitmap;
     private int exp;
     private String userID;
+    private CheckBox Bidet;
+    private CheckBox Aircon;
+    private CheckBox ToiletSeat;
+    private CheckBox TissuePaper;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +87,12 @@ public class AddNew_Fragment extends Fragment {
         AddRoom = view.findViewById(R.id.buttonAddRoom);
         selectImage = view.findViewById(R.id.selectImage);
         crImage = view.findViewById(R.id.crImageView);
+        Bidet = view.findViewById(R.id.checkBox);
+        Aircon = view.findViewById(R.id.checkBox2);
+        ToiletSeat = view.findViewById(R.id.checkBox3);
+        TissuePaper = view.findViewById(R.id.checkBox4);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getUid();
         databaseCR = FirebaseDatabase.getInstance().getReference("CR");
@@ -110,6 +123,11 @@ public class AddNew_Fragment extends Fragment {
         final String userEmail = firebaseAuth.getCurrentUser().getEmail();
         final String CrName = CrNameText.getText().toString().trim();
         final String CrLocation = CrLocationText.getText().toString().trim();
+        final Boolean hasBidet = Bidet.isChecked();
+        final Boolean hasAircon = Aircon.isChecked();
+        final Boolean hasToiletSeat = ToiletSeat.isChecked();
+        final Boolean hasTissue = TissuePaper.isChecked();
+
         if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
@@ -126,7 +144,7 @@ public class AddNew_Fragment extends Fragment {
                             // Got the uri
                             progressDialog.dismiss();
                             Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
-                            CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
+                            CrModel cr = new CrModel(CrName, CrLocation, id, uri.toString(), hasBidet, hasAircon, hasToiletSeat, hasTissue);
                             databaseCR.child(id).setValue(cr);
                             // Wrap with Uri.parse() when retrieving
                         }
@@ -169,10 +187,8 @@ public class AddNew_Fragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             uri = data.getData();
-
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-
                 crView.setImageBitmap(bitmap);
                 crView.setVisibility(View.VISIBLE);
             } catch (IOException e) {

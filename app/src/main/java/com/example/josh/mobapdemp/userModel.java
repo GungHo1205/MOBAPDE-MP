@@ -6,6 +6,7 @@ public class userModel {
     public userModel(){
 
     }
+
     public userModel(String email, int exp){
         this.email = email;
         this.exp = exp;
