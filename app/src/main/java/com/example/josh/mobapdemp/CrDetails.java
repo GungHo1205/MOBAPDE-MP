@@ -2,6 +2,7 @@ package com.example.josh.mobapdemp;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,8 @@ public class CrDetails extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseComments;
     private RatingBar ratingBarView;
+    private Button addReview;
+    private ConstraintLayout popUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,11 @@ public class CrDetails extends AppCompatActivity {
         userCommentInput = findViewById(R.id.usercommentInput);
         userAddComment = findViewById(R.id.AddComment);
         ratingBarView = findViewById(R.id.ratingBar);
+        popUp = findViewById(R.id.constraintLayoutPopup);
+
+        addReview = findViewById(R.id.buttonReview);
+        popUp.setVisibility(popUp.GONE);
+
 
         Intent intent = getIntent();
         String crName = intent.getStringExtra("crName");
@@ -65,14 +73,21 @@ public class CrDetails extends AppCompatActivity {
         userAddComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                popUp.setVisibility(popUp.VISIBLE);
+            }
+        });
+
+        addReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 String userInput = userCommentInput.getText().toString();
                 float rating = ratingBarView.getRating();
                 addComment(userInput, rating);
+                popUp.setVisibility(popUp.GONE);
                 Log.d("test2", "test addListener"+ rating);
                 Log.d("test2", "test addInput"+ userInput);
             }
         });
-
 
         adapter = new CommentsAdapter();
         manager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
