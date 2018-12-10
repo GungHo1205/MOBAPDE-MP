@@ -172,6 +172,7 @@ public class CrDetails extends AppCompatActivity {
             }
         });
     }
+
     private void createNotificationChannel() {
         Log.d("test2", "notifChannel");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
