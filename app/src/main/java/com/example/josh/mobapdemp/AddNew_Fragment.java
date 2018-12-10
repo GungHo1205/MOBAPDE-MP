@@ -186,6 +186,7 @@ public class AddNew_Fragment extends Fragment {
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
+
     public void onStart() {
         super.onStart();
         databaseUser.child(userID).addValueEventListener(new ValueEventListener() {

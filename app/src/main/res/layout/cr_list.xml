@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/layout_border2"
+    android:background="@drawable/layout_border"
     tools:layout_editor_absoluteY="25dp">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         app:layout_constraintStart_toEndOf="@+id/crImageList"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,7 +26,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        android:textColor="@android:color/background_light"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@+id/crImageList"
         app:layout_constraintTop_toBottomOf="@+id/textViewName" />
 

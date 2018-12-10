@@ -188,6 +188,7 @@ public class CrDetails extends AppCompatActivity {
             }
         });
     }
+
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
