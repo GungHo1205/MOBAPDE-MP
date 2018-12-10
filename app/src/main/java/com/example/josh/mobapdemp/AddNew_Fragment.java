@@ -34,8 +34,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +53,7 @@ public class AddNew_Fragment extends Fragment {
 
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseCR;
+    private DatabaseReference databaseUser;
     private EditText CrNameText;
     private EditText CrLocationText;
     private Button AddRoom;
@@ -59,6 +63,8 @@ public class AddNew_Fragment extends Fragment {
     private StorageReference storageReference;
     private Uri uri;
     private Bitmap bitmap;
+    private int exp;
+    private String userID;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -75,6 +81,7 @@ public class AddNew_Fragment extends Fragment {
         crImage = view.findViewById(R.id.crImageView);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseCR = FirebaseDatabase.getInstance().getReference("CR");
+        databaseUser = FirebaseDatabase.getInstance().getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
@@ -97,6 +104,9 @@ public class AddNew_Fragment extends Fragment {
     }
 
     public void addCr() {
+        Log.d("test2", "useremail" + firebaseAuth.getCurrentUser().getEmail());
+        final String userEmail = firebaseAuth.getCurrentUser().getEmail();
+        Log.d("test2", "useremailemail" + userEmail);
         final String CrName = CrNameText.getText().toString().trim();
         final String CrLocation = CrLocationText.getText().toString().trim();
         if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)) {
@@ -104,9 +114,9 @@ public class AddNew_Fragment extends Fragment {
             progressDialog.setTitle("Uploading");
             progressDialog.show();
             final String id = databaseCR.push().getKey();
-            Log.d("test2", id);
+            userID = firebaseAuth.getUid();
+            Log.d("test2", "ID" + userID);
             FirebaseUser user = firebaseAuth.getCurrentUser();
-            String userID = user.getUid();
             final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
              filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -119,9 +129,19 @@ public class AddNew_Fragment extends Fragment {
                             Toast.makeText(getActivity(), "CR added!", Toast.LENGTH_SHORT).show();
                             CrModel cr = new CrModel(id, CrName, CrLocation, uri.toString());
                             databaseCR.child(id).setValue(cr);
-                            Log.d("test2", databaseCR.push().getKey());
-                            Log.d("test2", id);
                             // Wrap with Uri.parse() when retrieving
+                            databaseUser.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    userModel userModel = dataSnapshot.getValue(userModel.class);
+                                    exp = userModel.getExp();
+                                    Log.d("test2", "exp" + exp);
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -130,7 +150,8 @@ public class AddNew_Fragment extends Fragment {
                             }
                         });
                     }
-                }).addOnFailureListener(new OnFailureListener() {
+                })
+                     .addOnFailureListener(new OnFailureListener() {
                  @Override
                  public void onFailure(@NonNull Exception e) {
                      progressDialog.dismiss();
@@ -143,6 +164,7 @@ public class AddNew_Fragment extends Fragment {
                      progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                  }
              });
+            databaseUser.child(userID).child("exp").setValue(exp+5);
         } else {
 
             Toast.makeText(getActivity(), "Empty Inputs", Toast.LENGTH_SHORT).show();

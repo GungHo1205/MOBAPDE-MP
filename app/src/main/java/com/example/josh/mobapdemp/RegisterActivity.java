@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +27,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ConstraintLayout backG2;
     private DatabaseReference databaseUser;
-    int exp;
+    private int exp;
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +78,12 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(RegisterActivity.this,"Success",Toast.LENGTH_SHORT).show();
-                            userModel user = new userModel(email, exp);
-                            String id = databaseUser.push().getKey();
-                            databaseUser.child(id).setValue(user);
+                            id = databaseUser.push().getKey();
+
+                            userModel user = new userModel(email, exp, firebaseAuth.getUid());
+                            databaseUser.child(firebaseAuth.getUid()).setValue(user);
+                            Log.d("test2", firebaseAuth.getUid());
+                            Log.d("test2", id);
                         }else{
                             Toast.makeText(RegisterActivity.this,"Failed", Toast.LENGTH_SHORT).show();
                         }
