@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -142,13 +143,7 @@ public class CrDetails extends AppCompatActivity {
                    CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
                    emailArray.add(CM.getCommentUsername());
                     adapter.addCm(CM);
-                    if(CM.getCommentUsername()!=firebaseAuth.getCurrentUser().getEmail()){
-                        Log.d("test2", "testif");
-                        createNotificationChannel();
-                        createNotif();
                     }
-                    Log.d("test2", "testnotif");
-                }
 
                 recyclerArea.setAdapter(adapter);
             }
@@ -169,6 +164,22 @@ public class CrDetails extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+        recyclerArea.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (!recyclerView.canScrollVertically(1)) {
+                    for(int x = 0; x <= emailArray.size();x++){
+                        Log.d("test2", emailArray.get(x));
+                        if(emailArray.get(x)!=firebaseAuth.getCurrentUser().getEmail()){
+                            createNotificationChannel();
+                            createNotif();
+                            break;
+                        }
+                    }
+                }
             }
         });
     }
