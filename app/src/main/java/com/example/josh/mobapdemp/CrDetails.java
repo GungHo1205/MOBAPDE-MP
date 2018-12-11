@@ -234,7 +234,7 @@ public class CrDetails extends AppCompatActivity {
     public void createNotif(){
         Intent intent = new Intent(CrDetails.this, CrDetails.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(CrDetails.this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(CrDetails.this, 0, new Intent(this, HomeActivity.class), 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(CrDetails.this, CHANNEL_ID)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Cromato")
