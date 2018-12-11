@@ -133,4 +133,6 @@ public class HomeActivity extends AppCompatActivity
         fragmentTransaction.replace(R.id.screen_area, fragment);
         fragmentTransaction.commit();
     }
+
+
 }
