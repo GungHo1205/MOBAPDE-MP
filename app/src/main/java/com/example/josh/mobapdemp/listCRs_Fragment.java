@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,7 +17,11 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.app.SearchManager;
 import android.support.v7.widget.SearchView;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.SearchView.OnQueryTextListener;
+import android.widget.Switch;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +38,12 @@ public class listCRs_Fragment extends Fragment {
     private RecyclerView recyclerArea;
     private CrAdapter adapter;
     private RecyclerView.LayoutManager manager;
+    private ConstraintLayout filterPopup;
+    private CheckBox filterBidet;
+    private CheckBox filterAircon;
+    private CheckBox filterToiletSeat;
+    private CheckBox filterTissue;
+
 
     @Nullable
     @Override
@@ -62,8 +73,37 @@ public class listCRs_Fragment extends Fragment {
         recyclerArea = view.findViewById(R.id.recycler);
         recyclerArea.setLayoutManager(manager);
 
+        filterPopup = view.findViewById(R.id.filterPopup);
+        filterBidet = view.findViewById(R.id.filterBidet);
+        filterAircon = view.findViewById(R.id.filterAircon);
+        filterToiletSeat = view.findViewById(R.id.filterToiletSeat);
+        filterTissue = view.findViewById(R.id.filterTissuePaper);
 
 
+        filterBidet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                adapter.getFilter2().filter(Boolean.toString(filterBidet.isChecked()));
+            }
+        });
+        filterAircon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                adapter.getFilter3().filter(Boolean.toString(filterAircon.isChecked()));
+            }
+        });
+        filterToiletSeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                adapter.getFilter4().filter(Boolean.toString(filterToiletSeat.isChecked()));
+            }
+        });
+        filterTissue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                adapter.getFilter5().filter(Boolean.toString(filterTissue.isChecked()));
+            }
+        });
 
     }
     

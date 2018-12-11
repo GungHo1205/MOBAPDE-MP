@@ -53,7 +53,6 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder> implements Filtera
                 .fit()
                 .centerCrop()
                 .into(crHolder.crImage);
-        crHolder.setCrImage(R.drawable.logo);
         crHolder.crCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +83,18 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder> implements Filtera
     public Filter getFilter() {
         return listFilter;
     }
+    public Filter getFilter2() {
+        return listFilter2;
+    }
+    public Filter getFilter3() {
+        return listFilter3;
+    }
+    public Filter getFilter4() {
+        return listFilter4;
+    }
+    public Filter getFilter5() {
+        return listFilter5;
+    }
 
     private Filter listFilter = new Filter() {
 
@@ -98,6 +109,143 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder> implements Filtera
 
                 for (CrModel item : exampleListFull) {
                     if (item.getCrName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    private Filter listFilter2 = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CrModel> filteredList = new ArrayList<>();
+
+            if (constraint == "true") {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasBidet()==true) {
+                        filteredList.add(item);
+                    }
+                }
+            } else {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasBidet()==false) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    private Filter listFilter3 = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CrModel> filteredList = new ArrayList<>();
+
+            if (constraint == "true") {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasAircon()==true) {
+                        filteredList.add(item);
+                    }
+                }
+            } else {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasAircon()==false) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    private Filter listFilter4 = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CrModel> filteredList = new ArrayList<>();
+
+            if (constraint == "true") {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasToiletSeat()==true) {
+                        filteredList.add(item);
+                    }
+                }
+            } else {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasToiletSeat()==false) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            list.clear();
+            list.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+    private Filter listFilter5 = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<CrModel> filteredList = new ArrayList<>();
+
+            if (constraint == "true") {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasTissue()==true) {
+                        filteredList.add(item);
+                    }
+                }
+            } else {
+                for (CrModel item : exampleListFull) {
+                    if (item.getHasTissue()==false) {
                         filteredList.add(item);
                     }
                 }
