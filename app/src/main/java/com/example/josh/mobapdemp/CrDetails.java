@@ -102,11 +102,6 @@ public class CrDetails extends AppCompatActivity {
         crDetailName.setText(crName);
         crDetailLocation.setText(crLocation);
 
-//        viewBidet.setEnabled(false);
-//        viewAircon.setEnabled(false);
-//        viewToiletSeat.setEnabled(false);
-//        viewTissue.setEnabled(false);
-
         viewBidet.setChecked(hasBidet);
         viewAircon.setChecked(hasAircon);
         viewToiletSeat.setChecked(hasToiletSeat);
