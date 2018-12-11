@@ -264,5 +264,31 @@ public class CrAdapter extends RecyclerView.Adapter<CrHolder> implements Filtera
             notifyDataSetChanged();
         }
     };
+
+    public void filterAll( Boolean bidet, Boolean aircon, Boolean toiletseat, Boolean tissue){
+            List<CrModel> filteredList = new ArrayList<>();
+
+            for(CrModel item: exampleListFull){
+                if(item.getHasBidet()==true){
+                    if (checkDuplicate(exampleListFull, item)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            list.clear();
+            list.addAll(filteredList);
+            notifyDataSetChanged();
+    }
+
+    public boolean checkDuplicate(ArrayList<CrModel> array, CrModel checkee){
+        for(CrModel checker: array){
+            if(checker.getId()==checkee.getId()){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
 

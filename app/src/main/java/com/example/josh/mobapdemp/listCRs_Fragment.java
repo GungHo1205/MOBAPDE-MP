@@ -43,6 +43,7 @@ public class listCRs_Fragment extends Fragment {
     private CheckBox filterAircon;
     private CheckBox filterToiletSeat;
     private CheckBox filterTissue;
+    private Button resetFilter;
 
 
     @Nullable
@@ -78,32 +79,121 @@ public class listCRs_Fragment extends Fragment {
         filterAircon = view.findViewById(R.id.filterAircon);
         filterToiletSeat = view.findViewById(R.id.filterToiletSeat);
         filterTissue = view.findViewById(R.id.filterTissuePaper);
+        resetFilter = view.findViewById(R.id.buttonResetFilter);
+
+        resetFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterBidet.setChecked(false);
+                filterAircon.setChecked(false);
+                filterToiletSeat.setChecked(false);
+                filterTissue.setChecked(false);
+                adapter.getFilter().filter("");
+            }
+        });
+        filterBidet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adapter.getFilter().filter("");
+                adapter.filterAll(filterBidet.isChecked(),filterAircon.isChecked(),filterToiletSeat.isChecked(),filterTissue.isChecked());
+            }
+        });
+
+        filterAircon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
-        filterBidet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        filterToiletSeat.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                adapter.getFilter2().filter(Boolean.toString(filterBidet.isChecked()));
+            public void onClick(View v) {
+
             }
         });
-        filterAircon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        filterTissue.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                adapter.getFilter3().filter(Boolean.toString(filterAircon.isChecked()));
+            public void onClick(View v) {
+
             }
         });
-        filterToiletSeat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                adapter.getFilter4().filter(Boolean.toString(filterToiletSeat.isChecked()));
-            }
-        });
-        filterTissue.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                adapter.getFilter5().filter(Boolean.toString(filterTissue.isChecked()));
-            }
-        });
+
+//        filterBidet.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(filterBidet.isChecked()){
+//                    adapter.getFilter2().filter(Boolean.toString(filterBidet.isChecked()));
+//                    filterAircon.setEnabled(false);
+//                    filterToiletSeat.setEnabled(false);
+//                    filterTissue.setEnabled(false);
+//                }else{
+//                    adapter.getFilter().filter("");
+//                    filterAircon.setEnabled(true);
+//                    filterToiletSeat.setEnabled(true);
+//                    filterTissue.setEnabled(true);
+//
+//                }
+//            }
+//        });
+//
+//        filterAircon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(filterAircon.isChecked()){
+//                    adapter.getFilter3().filter(Boolean.toString(filterAircon.isChecked()));
+//                    filterBidet.setEnabled(false);
+//                    filterToiletSeat.setEnabled(false);
+//                    filterTissue.setEnabled(false);
+//                }else{
+//                    adapter.getFilter().filter("");
+//                    filterBidet.setEnabled(true);
+//                    filterToiletSeat.setEnabled(true);
+//                    filterTissue.setEnabled(true);
+//
+//                }
+//            }
+//        });
+//
+//
+//        filterToiletSeat.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(filterToiletSeat.isChecked()){
+//                    adapter.getFilter4().filter(Boolean.toString(filterToiletSeat.isChecked()));
+//                    filterBidet.setEnabled(false);
+//                    filterAircon.setEnabled(false);
+//                    filterTissue.setEnabled(false);
+//                }else{
+//                    adapter.getFilter().filter("");
+//                    filterBidet.setEnabled(true);
+//                    filterAircon.setEnabled(true);
+//                    filterTissue.setEnabled(true);
+//
+//
+//                }
+//            }
+//        });
+//
+//        filterTissue.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(filterTissue.isChecked()){
+//                    adapter.getFilter5().filter(Boolean.toString(filterTissue.isChecked()));
+//                    filterBidet.setEnabled(false);
+//                    filterAircon.setEnabled(false);
+//                    filterToiletSeat.setEnabled(false);
+//                }else{
+//                    adapter.getFilter().filter("");
+//                    filterBidet.setEnabled(true);
+//                    filterAircon.setEnabled(true);
+//                    filterToiletSeat.setEnabled(true);
+//
+//                }
+//            }
+//        });
 
     }
     
