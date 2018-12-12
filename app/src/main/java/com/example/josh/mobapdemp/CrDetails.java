@@ -134,6 +134,8 @@ public class CrDetails extends AppCompatActivity {
                 float rating = ratingBarView.getRating();
                 if(!TextUtils.isEmpty(userInput)) {
                     addComment(userInput, rating);
+                }else{
+                    Toast.makeText(getApplicationContext(),"No Input",Toast.LENGTH_LONG);
                 }
                 userCommentInput.setText("");
                 ratingBarView.setRating(0);
