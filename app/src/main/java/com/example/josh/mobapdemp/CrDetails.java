@@ -190,8 +190,6 @@ public class CrDetails extends AppCompatActivity {
                     CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
                     emailArray.add(CM.commentUsername);
                     adapter.addCm(CM);
-                    Log.d("test2", "email" + emailArray.size());
-                    Log.d("test2", "exp" + emailArray.get(0));
                     aveRating += CM.getCrRating();
                     ctr++;
                 }
@@ -209,9 +207,6 @@ public class CrDetails extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userModel userModel = dataSnapshot.getValue(userModel.class);
                 exp = userModel.exp;
-
-                Log.d("test2", "email" + userModel.email);
-                Log.d("test2", "exp" + exp);
             }
 
             @Override
@@ -225,9 +220,6 @@ public class CrDetails extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1)) {
                     for (int x = 0; x < emailArray.size(); x++) {
-                        Log.d("test2", "hascomment" + hasComment);
-                        Log.d("test2", "email" + emailArray.get(x));
-                        Log.d("test2", "email2" + firebaseAuth.getCurrentUser().getEmail());
                         if (emailArray.get(x).equals(firebaseAuth.getCurrentUser().getEmail())) {
                             hasComment = true;
                             break;

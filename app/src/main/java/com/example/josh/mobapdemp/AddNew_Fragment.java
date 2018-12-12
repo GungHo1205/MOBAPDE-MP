@@ -207,8 +207,6 @@ public class AddNew_Fragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 userModel userModel = dataSnapshot.getValue(userModel.class);
                 exp = userModel.exp;
-                Log.d("test2", "email" + userModel.email);
-                Log.d("test2", "exp" + exp);
             }
 
             @Override

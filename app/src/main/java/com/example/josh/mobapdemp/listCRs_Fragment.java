@@ -96,16 +96,10 @@ public class listCRs_Fragment extends Fragment {
                 checkChecked();
                 if (filterAircon.isChecked()) {
                     checkNumber++;
-                    Log.d("test2", "checknumberadd" + checkNumber);
                 } else {
                     checkNumber--;
-                    Log.d("test2", "checknumbersubtract" + checkNumber);
-
                 }
-                Log.d("test2", "CheckNumberFinal" + checkNumber);
-
                 for (int i = 0; i < stringArrayList.size(); i++) {
-                    Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
             }
@@ -116,16 +110,8 @@ public class listCRs_Fragment extends Fragment {
                 checkChecked();
                 if (filterBidet.isChecked()) {
                     checkNumber++;
-                    Log.d("test2", "checknumberadd" + checkNumber);
                 } else {
                     checkNumber--;
-                    Log.d("test2", "checknumbersubtract" + checkNumber);
-
-                }
-                Log.d("test2", "CheckNumberFinal" + checkNumber);
-
-                for (int i = 0; i < stringArrayList.size(); i++) {
-                    Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
             }
@@ -136,16 +122,8 @@ public class listCRs_Fragment extends Fragment {
                 checkChecked();
                 if (filterTissue.isChecked()) {
                     checkNumber++;
-                    Log.d("test2", "checknumberadd" + checkNumber);
                 } else {
                     checkNumber--;
-                    Log.d("test2", "checknumbersubtract" + checkNumber);
-
-                }
-                Log.d("test2", "CheckNumberFinal" + checkNumber);
-
-                for (int i = 0; i < stringArrayList.size(); i++) {
-                    Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
             }
@@ -156,16 +134,8 @@ public class listCRs_Fragment extends Fragment {
                 checkChecked();
                 if (filterToiletSeat.isChecked()) {
                     checkNumber++;
-                    Log.d("test2", "checknumberadd" + checkNumber);
                 } else {
                     checkNumber--;
-                    Log.d("test2", "checknumbersubtract" + checkNumber);
-
-                }
-                Log.d("test2", "CheckNumberFinal" + checkNumber);
-
-                for (int i = 0; i < stringArrayList.size(); i++) {
-                    Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
 
@@ -250,9 +220,6 @@ public class listCRs_Fragment extends Fragment {
     private void perfromSort() {
         if (checkNumber >= 2) {
             final ArrayList<CrModel> crList = adapter.getCRList();
-            Log.d("test2", "adapter" + adapter.getCRList().size());
-            Log.d("test2", "crList" + crList.size());
-            Log.d("test2", "above2");
             databaseCR.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -264,7 +231,6 @@ public class listCRs_Fragment extends Fragment {
                                 if (CR.getHasBidet() == true) {
                                     if (!(adapter.getCRList().contains(CR))) {
                                         adapter.addCr(CR);
-                                        Log.d("test2", "hasbidetcrname ");
                                     }
                                 }
                             }
@@ -272,8 +238,6 @@ public class listCRs_Fragment extends Fragment {
                                 if (CR.getHasAircon() == true) {
                                     if (!(crList.contains(CR))) {
                                         adapter.addCr(CR);
-                                        Log.d("test2", "hasAirconcrName ");
-
                                     }
                                 }
                             }
@@ -281,8 +245,6 @@ public class listCRs_Fragment extends Fragment {
                                 if (CR.getHasTissue() == true) {
                                     if (!(crList.contains(CR))) {
                                         adapter.addCr(CR);
-                                        Log.d("test2", "hasAirconcrName ");
-
                                     }
                                 }
                             }
@@ -290,8 +252,6 @@ public class listCRs_Fragment extends Fragment {
                                 if (CR.getHasToiletSeat() == true) {
                                     if (!(crList.contains(CR))) {
                                         adapter.addCr(CR);
-                                        Log.d("test2", "hasAirconcrName ");
-
                                     }
                                 }
                             }
@@ -305,7 +265,6 @@ public class listCRs_Fragment extends Fragment {
                 }
             });
         } else {
-            Log.d("test2", "below2");
             databaseCR.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

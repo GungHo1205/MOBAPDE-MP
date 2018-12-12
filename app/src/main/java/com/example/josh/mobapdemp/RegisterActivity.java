@@ -76,11 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Success", Toast.LENGTH_SHORT).show();
                             id = databaseUser.push().getKey();
-
                             userModel user = new userModel(email, exp);
                             databaseUser.child(firebaseAuth.getUid()).setValue(user);
-                            Log.d("test2", firebaseAuth.getUid());
-                            Log.d("test2", id);
                         } else {
                             Toast.makeText(RegisterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                         }
