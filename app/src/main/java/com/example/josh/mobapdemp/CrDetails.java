@@ -37,6 +37,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class CrDetails extends AppCompatActivity {
     private TextView crDetailName;
@@ -131,8 +132,9 @@ public class CrDetails extends AppCompatActivity {
             public void onClick(View v) {
                 String userInput = userCommentInput.getText().toString();
                 float rating = ratingBarView.getRating();
-                addComment(userInput, rating);
-
+                if(!TextUtils.isEmpty(userInput)) {
+                    addComment(userInput, rating);
+                }
                 userCommentInput.setText("");
                 ratingBarView.setRating(0);
 
@@ -194,7 +196,8 @@ public class CrDetails extends AppCompatActivity {
                     ctr++;
                 }
                 aveRating = aveRating / ctr;
-                ratingView.setText(Float.toString(aveRating) + "/5 stars");
+                String result = String.format(Locale.getDefault(), "%.2f", aveRating);
+                ratingView.setText(result + "/5 stars");
                 recyclerArea.setAdapter(adapter);
             }
 
