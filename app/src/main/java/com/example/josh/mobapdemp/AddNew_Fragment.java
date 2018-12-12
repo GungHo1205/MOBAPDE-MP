@@ -98,6 +98,7 @@ public class AddNew_Fragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference();
 
         uri = null;
+
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             AddNew_Fragment.this.startActivity(intent);
@@ -126,7 +127,7 @@ public class AddNew_Fragment extends Fragment {
         final Boolean hasToiletSeat = ToiletSeat.isChecked();
         final Boolean hasTissue = TissuePaper.isChecked();
 
-        if (!TextUtils.isEmpty(CrName) || !TextUtils.isEmpty(CrLocation)||uri!=null) {
+        if (!TextUtils.isEmpty(CrName) && !TextUtils.isEmpty(CrLocation) && uri!=null) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Uploading");
             progressDialog.show();
