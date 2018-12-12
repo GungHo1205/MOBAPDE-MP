@@ -6,7 +6,10 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +50,9 @@ public class CrDetails extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseComments;
     private RatingBar ratingBarView;
+    private TextView ratingView;
     private Button addReview;
+    private Button cancelReview;
     private ConstraintLayout popUp;
     private DatabaseReference databaseUser;
     private int exp;
@@ -73,7 +79,9 @@ public class CrDetails extends AppCompatActivity {
         ratingBarView = findViewById(R.id.ratingBar);
         popUp = findViewById(R.id.constraintLayoutPopup);
         notificationID = 12;
+        ratingView = findViewById(R.id.RatingView);
         addReview = findViewById(R.id.buttonReview);
+        cancelReview = findViewById(R.id.cancelReview);
         popUp.setVisibility(popUp.GONE);
         emailArray = new ArrayList<String>();
         hasComment = false;
@@ -124,6 +132,17 @@ public class CrDetails extends AppCompatActivity {
                 String userInput = userCommentInput.getText().toString();
                 float rating = ratingBarView.getRating();
                 addComment(userInput, rating);
+
+                userCommentInput.setText("");
+                ratingBarView.setRating(0);
+
+                popUp.setVisibility(popUp.GONE);
+            }
+        });
+
+        cancelReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 popUp.setVisibility(popUp.GONE);
             }
         });
@@ -136,7 +155,7 @@ public class CrDetails extends AppCompatActivity {
         });
 
         adapter = new CommentsAdapter();
-        manager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        manager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
 
         recyclerArea = findViewById(R.id.recyclerComments);
         recyclerArea.setLayoutManager(manager);
@@ -148,12 +167,13 @@ public class CrDetails extends AppCompatActivity {
 
     }
 
-    public void addComment(String userInput, float rating){
-        if(!TextUtils.isEmpty(userInput)){
+    public void addComment(String userInput, float rating) {
+        if (!TextUtils.isEmpty(userInput)) {
             String id = databaseComments.push().getKey();
             CommentsModel cm = new CommentsModel(firebaseAuth.getCurrentUser().getEmail(), userInput, rating, id);
-            databaseUser.child(userID).child("exp").setValue(exp+3);
+            databaseUser.child(userID).child("exp").setValue(exp + 3);
             databaseComments.child(id).setValue(cm);
+            Toast.makeText(getApplicationContext(), "Earned 3xp for adding a review!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -164,17 +184,22 @@ public class CrDetails extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 adapter.clearList();
-
-                for(DataSnapshot cmSnapshot : dataSnapshot.getChildren()){
-                   CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
-                   emailArray.add(CM.commentUsername);
+                float aveRating = 0;
+                float ctr = 0;
+                for (DataSnapshot cmSnapshot : dataSnapshot.getChildren()) {
+                    CommentsModel CM = cmSnapshot.getValue(CommentsModel.class);
+                    emailArray.add(CM.commentUsername);
                     adapter.addCm(CM);
                     Log.d("test2", "email" + emailArray.size());
                     Log.d("test2", "exp" + emailArray.get(0));
-                    }
-
+                    aveRating += CM.getCrRating();
+                    ctr++;
+                }
+                aveRating = aveRating / ctr;
+                ratingView.setText(Float.toString(aveRating) + "/5 stars");
                 recyclerArea.setAdapter(adapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -194,23 +219,23 @@ public class CrDetails extends AppCompatActivity {
 
             }
         });
-        recyclerArea.addOnScrollListener(new RecyclerView.OnScrollListener(){
+        recyclerArea.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (!recyclerView.canScrollVertically(1)) {
-                    for(int x = 0; x < emailArray.size();x++){
-                        Log.d("test2", "hascomment"+ hasComment);
-                        Log.d("test2", "email"+ emailArray.get(x));
-                        Log.d("test2", "email2"+ firebaseAuth.getCurrentUser().getEmail());
-                        if(emailArray.get(x).equals(firebaseAuth.getCurrentUser().getEmail())){
+                    for (int x = 0; x < emailArray.size(); x++) {
+                        Log.d("test2", "hascomment" + hasComment);
+                        Log.d("test2", "email" + emailArray.get(x));
+                        Log.d("test2", "email2" + firebaseAuth.getCurrentUser().getEmail());
+                        if (emailArray.get(x).equals(firebaseAuth.getCurrentUser().getEmail())) {
                             hasComment = true;
                             break;
                         }
-                        Log.d("test2", "hascomment"+ hasComment);
+                        Log.d("test2", "hascomment" + hasComment);
                     }
                     Log.d("test2", "unscrollable");
-                    if(hasComment == false && hasNotif == false) {
+                    if (hasComment == false && hasNotif == false) {
                         createNotificationChannel();
                         createNotif();
                         hasNotif = true;
@@ -231,7 +256,7 @@ public class CrDetails extends AppCompatActivity {
         }
     }
 
-    public void createNotif(){
+    public void createNotif() {
         Intent intent = new Intent(CrDetails.this, CrDetails.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(CrDetails.this, 0, new Intent(this, HomeActivity.class), 0);

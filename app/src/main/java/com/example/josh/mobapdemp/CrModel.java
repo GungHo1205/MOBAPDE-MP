@@ -2,7 +2,7 @@ package com.example.josh.mobapdemp;
 
 import android.widget.Button;
 
-public class CrModel  {
+public class CrModel {
     private String crName;
     private String crLocation;
     private String id;
@@ -12,7 +12,7 @@ public class CrModel  {
     private Boolean hasToiletSeat;
     private Boolean hasTissue;
 
-    public CrModel (){
+    public CrModel() {
 
     }
 

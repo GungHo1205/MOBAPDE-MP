@@ -3,11 +3,12 @@ package com.example.josh.mobapdemp;
 public class userModel {
     public String email;
     public int exp;
-    public userModel(){
+
+    public userModel() {
 
     }
 
-    public userModel(String email, int exp){
+    public userModel(String email, int exp) {
         this.email = email;
         this.exp = exp;
     }

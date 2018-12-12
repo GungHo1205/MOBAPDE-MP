@@ -24,7 +24,6 @@ import android.widget.CompoundButton;
 import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Switch;
 
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,6 +49,7 @@ public class listCRs_Fragment extends Fragment {
     private ArrayList<CheckBox> checkBoxArraylist;
     private ArrayList<String> stringArrayList;
     private int checkNumber;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -94,18 +94,17 @@ public class listCRs_Fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkChecked();
-                if(filterAircon.isChecked()){
+                if (filterAircon.isChecked()) {
                     checkNumber++;
                     Log.d("test2", "checknumberadd" + checkNumber);
-                }
-                else{
+                } else {
                     checkNumber--;
                     Log.d("test2", "checknumbersubtract" + checkNumber);
 
                 }
                 Log.d("test2", "CheckNumberFinal" + checkNumber);
 
-                for(int i = 0; i < stringArrayList.size(); i++){
+                for (int i = 0; i < stringArrayList.size(); i++) {
                     Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
@@ -115,18 +114,17 @@ public class listCRs_Fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkChecked();
-                if(filterBidet.isChecked()){
+                if (filterBidet.isChecked()) {
                     checkNumber++;
                     Log.d("test2", "checknumberadd" + checkNumber);
-                }
-                else{
+                } else {
                     checkNumber--;
                     Log.d("test2", "checknumbersubtract" + checkNumber);
 
                 }
                 Log.d("test2", "CheckNumberFinal" + checkNumber);
 
-                for(int i = 0; i < stringArrayList.size(); i++){
+                for (int i = 0; i < stringArrayList.size(); i++) {
                     Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
@@ -136,18 +134,17 @@ public class listCRs_Fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkChecked();
-                if(filterTissue.isChecked()){
+                if (filterTissue.isChecked()) {
                     checkNumber++;
                     Log.d("test2", "checknumberadd" + checkNumber);
-                }
-                else{
+                } else {
                     checkNumber--;
                     Log.d("test2", "checknumbersubtract" + checkNumber);
 
                 }
                 Log.d("test2", "CheckNumberFinal" + checkNumber);
 
-                for(int i = 0; i < stringArrayList.size(); i++){
+                for (int i = 0; i < stringArrayList.size(); i++) {
                     Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
@@ -157,134 +154,53 @@ public class listCRs_Fragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 checkChecked();
-                if(filterToiletSeat.isChecked()){
+                if (filterToiletSeat.isChecked()) {
                     checkNumber++;
                     Log.d("test2", "checknumberadd" + checkNumber);
-                }
-                else{
+                } else {
                     checkNumber--;
                     Log.d("test2", "checknumbersubtract" + checkNumber);
 
                 }
                 Log.d("test2", "CheckNumberFinal" + checkNumber);
 
-                for(int i = 0; i < stringArrayList.size(); i++){
+                for (int i = 0; i < stringArrayList.size(); i++) {
                     Log.d("test2", stringArrayList.get(i));
                 }
                 perfromSort();
 
             }
         });
-//        resetFilter.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                filterBidet.setChecked(false);
-//                filterAircon.setChecked(false);
-//                filterToiletSeat.setChecked(false);
-//                filterTissue.setChecked(false);
-//                filterBidet.setEnabled(true);
-//                filterAircon.setEnabled(true);
-//                filterToiletSeat.setEnabled(true);
-//                filterTissue.setEnabled(true);
-//                adapter.getFilter().filter("");
-//            }
-//        });
-//
-//
-//        filterBidet.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(filterBidet.isChecked()){
-//                    adapter.getFilter2().filter(Boolean.toString(filterBidet.isChecked()));
-//                    filterAircon.setEnabled(false);
-//                    filterToiletSeat.setEnabled(false);
-//                    filterTissue.setEnabled(false);
-//                }else{
-//                    adapter.getFilter().filter("");
-//                    filterAircon.setEnabled(true);
-//                    filterToiletSeat.setEnabled(true);
-//                    filterTissue.setEnabled(true);
-//
-//                }
-//            }
-//        });
-//
-//        filterAircon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(filterAircon.isChecked()){
-//                    adapter.getFilter3().filter(Boolean.toString(filterAircon.isChecked()));
-//                    filterBidet.setEnabled(false);
-//                    filterToiletSeat.setEnabled(false);
-//                    filterTissue.setEnabled(false);
-//                }else{
-//                    adapter.getFilter().filter("");
-//                    filterBidet.setEnabled(true);
-//                    filterToiletSeat.setEnabled(true);
-//                    filterTissue.setEnabled(true);
-//
-//                }
-//            }
-//        });
-//
-//
-//        filterToiletSeat.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(filterToiletSeat.isChecked()){
-//                    adapter.getFilter4().filter(Boolean.toString(filterToiletSeat.isChecked()));
-//                    filterBidet.setEnabled(false);
-//                    filterAircon.setEnabled(false);
-//                    filterTissue.setEnabled(false);
-//                }else{
-//                    adapter.getFilter().filter("");
-//                    filterBidet.setEnabled(true);
-//                    filterAircon.setEnabled(true);
-//                    filterTissue.setEnabled(true);
-//
-//
-//                }
-//            }
-//        });
-//
-//        filterTissue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(filterTissue.isChecked()){
-//                    adapter.getFilter5().filter(Boolean.toString(filterTissue.isChecked()));
-//                    filterBidet.setEnabled(false);
-//                    filterAircon.setEnabled(false);
-//                    filterToiletSeat.setEnabled(false);
-//                }else{
-//                    adapter.getFilter().filter("");
-//                    filterBidet.setEnabled(true);
-//                    filterAircon.setEnabled(true);
-//                    filterToiletSeat.setEnabled(true);
-//
-//                }
-//            }
-//        });
-//
-//    }
-//
+        resetFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterBidet.setChecked(false);
+                filterAircon.setChecked(false);
+                filterToiletSeat.setChecked(false);
+                filterTissue.setChecked(false);
+                adapter.getFilter().filter("");
+            }
+        });
     }
-    private void checkChecked(){
+
+    private void checkChecked() {
         stringArrayList.clear();
-            if(filterBidet.isChecked()){
-                stringArrayList.add("item.getHasBidet");
-            }
+        if (filterBidet.isChecked()) {
+            stringArrayList.add("item.getHasBidet");
+        }
 
-            if(filterAircon.isChecked()) {
-                stringArrayList.add("item.getHasAircon");
-            }
-            if(filterTissue.isChecked()){
-                stringArrayList.add("item.getHasTissue");
-            }
+        if (filterAircon.isChecked()) {
+            stringArrayList.add("item.getHasAircon");
+        }
+        if (filterTissue.isChecked()) {
+            stringArrayList.add("item.getHasTissue");
+        }
 
-            if(filterToiletSeat.isChecked()){
-                stringArrayList.add("item.getHasToiletSeat");
-            }
+        if (filterToiletSeat.isChecked()) {
+            stringArrayList.add("item.getHasToiletSeat");
+        }
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -292,12 +208,13 @@ public class listCRs_Fragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 adapter.clearList();
-                for(DataSnapshot crSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot crSnapshot : dataSnapshot.getChildren()) {
                     CrModel CR = crSnapshot.getValue(CrModel.class);
                     adapter.addCr(CR);
                 }
                 recyclerArea.setAdapter(adapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -345,35 +262,35 @@ public class listCRs_Fragment extends Fragment {
                         for (int x = 0; x < stringArrayList.size(); x++) {
                             if (stringArrayList.get(x).equals("item.getHasBidet")) {
                                 if (CR.getHasBidet() == true) {
-                                        if (!(adapter.getCRList().contains(CR))) {
-                                            adapter.addCr(CR);
-                                            Log.d("test2", "hasbidetcrname ");
+                                    if (!(adapter.getCRList().contains(CR))) {
+                                        adapter.addCr(CR);
+                                        Log.d("test2", "hasbidetcrname ");
                                     }
                                 }
                             }
                             if (stringArrayList.get(x).equals("item.getHasAircon")) {
                                 if (CR.getHasAircon() == true) {
-                                        if (!(crList.contains(CR))) {
-                                            adapter.addCr(CR);
-                                            Log.d("test2", "hasAirconcrName ");
+                                    if (!(crList.contains(CR))) {
+                                        adapter.addCr(CR);
+                                        Log.d("test2", "hasAirconcrName ");
 
                                     }
                                 }
                             }
                             if (stringArrayList.get(x).equals("item.getHasTissue")) {
                                 if (CR.getHasTissue() == true) {
-                                        if (!(crList.contains(CR))) {
-                                            adapter.addCr(CR);
-                                            Log.d("test2", "hasAirconcrName ");
+                                    if (!(crList.contains(CR))) {
+                                        adapter.addCr(CR);
+                                        Log.d("test2", "hasAirconcrName ");
 
                                     }
                                 }
                             }
                             if (stringArrayList.get(x).equals("item.getHasToiletSeat")) {
                                 if (CR.getHasToiletSeat() == true) {
-                                        if (!(crList.contains(CR))) {
-                                            adapter.addCr(CR);
-                                            Log.d("test2", "hasAirconcrName " );
+                                    if (!(crList.contains(CR))) {
+                                        adapter.addCr(CR);
+                                        Log.d("test2", "hasAirconcrName ");
 
                                     }
                                 }
@@ -387,7 +304,7 @@ public class listCRs_Fragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-        }else{
+        } else {
             Log.d("test2", "below2");
             databaseCR.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -423,18 +340,18 @@ public class listCRs_Fragment extends Fragment {
                                 }
                             }
                         }
-                        if (!filterToiletSeat.isChecked() && !filterTissue.isChecked() && !filterBidet.isChecked() && !filterAircon.isChecked()){
+                        if (!filterToiletSeat.isChecked() && !filterTissue.isChecked() && !filterBidet.isChecked() && !filterAircon.isChecked()) {
                             adapter.addCr(CR);
                         }
                         recyclerArea.setAdapter(adapter);
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
+                }
             });
         }
     }
-
 
 }

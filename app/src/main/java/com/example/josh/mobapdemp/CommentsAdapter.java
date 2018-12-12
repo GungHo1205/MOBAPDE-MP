@@ -12,18 +12,17 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder>{
+public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder> {
 
     private ArrayList<CommentsModel> list;
 
-    public CommentsAdapter(){
+    public CommentsAdapter() {
         list = new ArrayList<CommentsModel>();
     }
 
-    public void addCm(CommentsModel cm){
+    public void addCm(CommentsModel cm) {
         list.add(cm);
     }
-
 
     @NonNull
     @Override
@@ -36,12 +35,12 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CommentsHolder commentsHolder, final int i) {
-       commentsHolder.setUsername(list.get(i).getCommentUsername());
-       commentsHolder.setComment(list.get(i).getCommentDescription());
-       commentsHolder.setRatingBar(list.get(i).getCrRating());
+        commentsHolder.setUsername(list.get(i).getCommentUsername());
+        commentsHolder.setComment(list.get(i).getCommentDescription());
+        commentsHolder.setRatingBar(list.get(i).getCrRating());
     }
 
-    public void clearList(){
+    public void clearList() {
         list.clear();
     }
 

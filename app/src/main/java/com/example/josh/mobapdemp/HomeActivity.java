@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class HomeActivity extends AppCompatActivity
 
     private FirebaseAuth firebaseAuth;
     private TextView username;
+    private ImageView homeimg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,7 @@ public class HomeActivity extends AppCompatActivity
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             finish();
             HomeActivity.this.startActivity(intent);
@@ -46,7 +47,6 @@ public class HomeActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -60,6 +60,13 @@ public class HomeActivity extends AppCompatActivity
         username = navigationView.getHeaderView(0).findViewById(R.id.TextUsername);
         username.setText(firebaseAuth.getCurrentUser().getEmail());
 
+        homeimg = navigationView.getHeaderView(0).findViewById(R.id.imageView);
+        homeimg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        homeimg.setAdjustViewBounds(true);
+        homeimg.setMaxHeight(24);
+        homeimg.setMaxWidth(24);
+        homeimg.setImageResource(R.drawable.portal_toilet_portal);
+
         createFragmentSpace(new listCRs_Fragment());
 
     }
@@ -67,8 +74,6 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -109,7 +114,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_AddNew) {
             fragment = new AddNew_Fragment();
         } else if (id == R.id.nav_Profile) {
-
+            fragment = new Profile_Fragment();
         } else if (id == R.id.nav_LogOut) {
             firebaseAuth.signOut();
             finish();
@@ -117,7 +122,7 @@ public class HomeActivity extends AppCompatActivity
             HomeActivity.this.startActivity(intent);
         }
 
-        if(fragment!=null){
+        if (fragment != null) {
             createFragmentSpace(fragment);
         }
 
@@ -126,13 +131,12 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    public void createFragmentSpace(Fragment fragment){
+    public void createFragmentSpace(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.replace(R.id.screen_area, fragment);
         fragmentTransaction.commit();
     }
-
 
 }

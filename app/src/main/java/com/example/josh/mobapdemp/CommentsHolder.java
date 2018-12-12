@@ -8,12 +8,12 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class CommentsHolder extends RecyclerView.ViewHolder{
+public class CommentsHolder extends RecyclerView.ViewHolder {
     private TextView usernameView;
     private TextView commentView;
     private RatingBar ratingBar;
 
-    public CommentsHolder(View view){
+    public CommentsHolder(View view) {
         super(view);
 
         usernameView = view.findViewById(R.id.textViewCommentUsername);
@@ -22,14 +22,15 @@ public class CommentsHolder extends RecyclerView.ViewHolder{
 
     }
 
-    public void setUsername(String username){
+    public void setUsername(String username) {
         usernameView.setText(username);
     }
-    public void setComment(String comment){
+
+    public void setComment(String comment) {
         commentView.setText(comment);
     }
 
-    public void setRatingBar(float rating){
+    public void setRatingBar(float rating) {
         ratingBar.setRating(rating);
     }
 

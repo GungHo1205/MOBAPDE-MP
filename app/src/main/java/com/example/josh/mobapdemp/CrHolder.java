@@ -6,14 +6,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CrHolder extends RecyclerView.ViewHolder{
+public class CrHolder extends RecyclerView.ViewHolder {
 
     private TextView crName;
     private TextView crLocation;
     public ImageView crImage;
     public Button crCheck;
 
-    public CrHolder(View view){
+    public CrHolder(View view) {
         super(view);
 
         crName = view.findViewById(R.id.textViewName);
@@ -29,8 +29,16 @@ public class CrHolder extends RecyclerView.ViewHolder{
         });
     }
 
-    public void setName(String name){ crName.setText(name);}
-    public void setLocation(String location){ crLocation.setText(location);}
-    public void setCrImage(int i){crImage.setImageResource(i);}
+    public void setName(String name) {
+        crName.setText(name);
+    }
+
+    public void setLocation(String location) {
+        crLocation.setText(location);
+    }
+
+    public void setCrImage(int i) {
+        crImage.setImageResource(i);
+    }
 
 }

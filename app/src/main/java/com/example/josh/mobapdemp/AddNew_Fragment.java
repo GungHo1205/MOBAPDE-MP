@@ -56,7 +56,6 @@ public class AddNew_Fragment extends Fragment {
     private FirebaseAuth firebaseAuth;
     private DatabaseReference databaseCR;
     private DatabaseReference databaseUser;
-    //    private DatabaseReference databaseUserExp;
     private EditText CrNameText;
     private EditText CrLocationText;
     private Button AddRoom;
@@ -92,18 +91,15 @@ public class AddNew_Fragment extends Fragment {
         ToiletSeat = view.findViewById(R.id.checkBox3);
         TissuePaper = view.findViewById(R.id.checkBox4);
 
-
         firebaseAuth = FirebaseAuth.getInstance();
         userID = firebaseAuth.getUid();
         databaseCR = FirebaseDatabase.getInstance().getReference("CR");
         databaseUser = FirebaseDatabase.getInstance().getReference("Users");
-//        databaseUserExp = databaseUser.child("exp");
         storageReference = FirebaseStorage.getInstance().getReference();
         if (firebaseAuth.getCurrentUser() == null) {
             Intent intent = new Intent(getActivity(), MainActivity.class);
             AddNew_Fragment.this.startActivity(intent);
         }
-
 
         AddRoom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +130,7 @@ public class AddNew_Fragment extends Fragment {
             progressDialog.show();
             final String id = databaseCR.push().getKey();
             FirebaseUser user = firebaseAuth.getCurrentUser();
-            final StorageReference filepath = storageReference.child("CRPhotos"+System.currentTimeMillis()+"."+getImageExt(uri));
+            final StorageReference filepath = storageReference.child("CRPhotos" + System.currentTimeMillis() + "." + getImageExt(uri));
             filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
@@ -169,19 +165,20 @@ public class AddNew_Fragment extends Fragment {
                     progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
                 }
             });
-            databaseUser.child(userID).child("exp").setValue(exp+5);
+            databaseUser.child(userID).child("exp").setValue(exp + 5);
+            Toast.makeText(getActivity(), "Earned 5xp for adding a Comfort Room!", Toast.LENGTH_SHORT).show();
         } else {
-
             Toast.makeText(getActivity(), "Empty Inputs", Toast.LENGTH_SHORT).show();
-
         }
     }
+
     private void selectImage() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         ImageView crView = getView().findViewById(R.id.crImageView);
         super.onActivityResult(requestCode, resultCode, data);
@@ -197,7 +194,7 @@ public class AddNew_Fragment extends Fragment {
         }
     }
 
-    public String getImageExt(Uri uri){
+    public String getImageExt(Uri uri) {
         ContentResolver contentResolver = getContext().getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));

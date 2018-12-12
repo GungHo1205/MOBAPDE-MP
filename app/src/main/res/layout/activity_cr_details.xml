@@ -210,7 +210,7 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:textColor="@android:color/background_light"
+            android:textColor="@android:color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -234,6 +234,18 @@
             android:textColor="@android:color/background_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/usercommentInput" />
+
+        <Button
+            android:id="@+id/cancelReview"
+            android:layout_width="89dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorAccent"
+            android:text="CANCEL"
+            android:textColor="@android:color/background_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

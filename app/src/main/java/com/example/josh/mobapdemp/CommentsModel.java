@@ -12,7 +12,8 @@ public class CommentsModel {
         this.id = id;
         this.crRating = crRating;
     }
-    public CommentsModel(){
+
+    public CommentsModel() {
 
     }
 
